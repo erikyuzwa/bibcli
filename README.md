@@ -1,12 +1,52 @@
 # bibcli
 
-A handy dandy CLI for sifting through different bible translations!
+A handy dandy CLI for sifting through different translations of God's Holy Word!
 
 ## Installation
 
 `npm i bibcli`
 
 ## Usage
+
+- Searching for a pattern
+```
+--- Search Results for 'morning star' in './data/en' ---
+
+File: data/en/esv.txt
+  [JB3807] Context: "Jb3807 when the morning stars sang together and all the sons of God shouted fo..."
+  [2P0119] Context: "...ning in a dark place, until the day dawns and the morning star rises in your hearts,  "
+  [RV0228] Context: "Rv0228 And I will give him the morning star.  "
+  [RV2216] Context: "... the root and the descendant of David, the bright morning star.”  "
+
+File: data/en/kjv.txt
+  [JB3807] Context: "Jb3807 When the morning stars sang together, and all the sons of God shouted f..."
+  [RV0228] Context: "Rv0228 And I will give him the morning star.  "
+  [RV2216] Context: "...ot and the offspring of David, and the bright and morning star.  "
+
+File: data/en/nkjv.txt
+  [JB3807] Context: "Jb3807 When the morning stars sang together, And all the sons of God shouted f..."
+  [2P0119] Context: "...ines in a dark place, until the day dawns and the morning star rises in your hearts;  "
+  [RV0228] Context: "Rv0228 and I will give him the morning star.  "
+  [RV2216] Context: "...e Root and the Offspring of David, the Bright and Morning Star.”  "
+
+Search complete! Found 11 total match(es) in 3 file(s).
+```
+
+- Available options
+```
+Usage: bibcli [options]
+
+CLI tool for scavaging patterns in different translations of God's Holy Word.
+
+Options:
+  -V, --version        output the version number
+  -d, --debug          output extra debugging
+  -l, --lang           language (default "en")
+  -t, --text <string>  phrase to search for
+  -h, --help           display help for command
+```
+
+
 
 ## Development
 
