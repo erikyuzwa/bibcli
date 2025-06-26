@@ -2,14 +2,25 @@
   "name": "bibcli",
   "version": "0.0.1",
   "main": "index.js",
+  "type": "module",
   "bin": {
-    "bibcli": "bin/index.js"
+    "bibcli": "./index.js"
   },
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "cli",
+    "node",
+    "bible"
+  ],
   "author": "Erik Yuzwa <erikyuzwa@gmail.com>",
   "license": "MIT",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^14.0.0",
+    "ora": "^8.2.0"
+  }
 }
