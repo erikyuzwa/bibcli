@@ -1,0 +1,15 @@
+{
+  "name": "bibcli",
+  "version": "0.0.1",
+  "main": "index.js",
+  "bin": {
+    "bibcli": "bin/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Erik Yuzwa <erikyuzwa@gmail.com>",
+  "license": "MIT",
+  "description": ""
+}
