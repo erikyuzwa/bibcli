@@ -1,5 +1,6 @@
 {
   "name": "bibcli",
+  "description": "CLI tool for scavaging patterns in different translations of God's Holy Word.",
   "version": "0.0.1",
   "main": "index.js",
   "type": "module",
@@ -17,7 +18,6 @@
   ],
   "author": "Erik Yuzwa <erikyuzwa@gmail.com>",
   "license": "MIT",
-  "description": "",
   "dependencies": {
     "chalk": "^5.4.1",
     "commander": "^14.0.0",
