@@ -9,7 +9,7 @@ A handy dandy CLI for sifting through different translations of God's Holy Word!
 ## Usage
 
 - Searching for a pattern
-`bibcli -t "morning star"`
+`bibcli --text "morning star"` or `bibcli -t "morning star"`
 ```
 --- Search Results for 'morning star' in './data/en' ---
 
@@ -34,6 +34,7 @@ Search complete! Found 11 total match(es) in 3 file(s).
 ```
 
 - Available options
+`bibcli --help` or `bibcli -h`
 ```
 Usage: bibcli [options]
 
