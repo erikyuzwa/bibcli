@@ -1,7 +1,7 @@
 {
   "name": "bibcli",
   "description": "CLI tool for scavaging patterns in different translations of God's Holy Word.",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "main": "index.js",
   "type": "module",
   "bin": {
