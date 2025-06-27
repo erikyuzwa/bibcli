@@ -16,7 +16,7 @@ A handy dandy CLI for sifting through different translations of God's Holy Word!
 
 ## Usage
 
-- Searching for a pattern
+- Searching for a pattern in available translations
 `bibcli --phrase "morning star"` or `bibcli -p "morning star"`
 ```
 --- Search Results for 'morning star' in './data/en' ---
@@ -41,6 +41,20 @@ File: data/en/nkjv.txt
 Search complete! Found 11 total match(es) in 3 file(s).
 ```
 
+- Searching for a pattern using a translation filter
+  `bibcli --phrase "morning star" --translation kjv` or `bibcli -p "morning star" -t kjv`
+```
+--- Search Results for 'morning star' in './data/en' ---
+
+File: data/en/kjv.txt
+  [JB3807] Context: "Jb3807 When the morning stars sang together, and all the sons of God shouted f..."
+  [RV0228] Context: "Rv0228 And I will give him the morning star.  "
+  [RV2216] Context: "...ot and the offspring of David, and the bright and morning star.  "
+
+Search complete! Found 3 total match(es) in 1 file(s).
+```
+
+
 - Available options
 `bibcli --help` or `bibcli -h`
 ```
@@ -53,6 +67,7 @@ Options:
   -d, --debug          output extra debugging
   -l, --lang <string>  language (default "en")
   -p, --phrase <string>  phrase to search for
+  -t, --translation <string> translation filter (default '')
   -h, --help           display help for command
 ```
 
