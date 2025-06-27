@@ -5,6 +5,7 @@ A handy dandy CLI for sifting through different translations of God's Holy Word!
 ## Translations Supported
 
 - `KJV` (King James Version - of course)
+- `NASB95` (New American Standard Bible 1995)
 - `NKJV`(New King James Version)
 - `ESV` (English Standard Version)
 - `AMP` (Amplified Version)
@@ -16,7 +17,7 @@ A handy dandy CLI for sifting through different translations of God's Holy Word!
 ## Usage
 
 - Searching for a pattern
-`bibcli --text "morning star"` or `bibcli -t "morning star"`
+`bibcli --phrase "morning star"` or `bibcli -p "morning star"`
 ```
 --- Search Results for 'morning star' in './data/en' ---
 
@@ -50,8 +51,8 @@ CLI tool for scavaging patterns in different translations of God's Holy Word.
 Options:
   -V, --version        output the version number
   -d, --debug          output extra debugging
-  -l, --lang           language (default "en")
-  -t, --text <string>  phrase to search for
+  -l, --lang <string>  language (default "en")
+  -p, --phrase <string>  phrase to search for
   -h, --help           display help for command
 ```
 

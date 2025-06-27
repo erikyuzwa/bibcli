@@ -16,17 +16,18 @@ program
     .version('0.0.1')
     .option('-d, --debug', 'output extra debugging')
     .option('-l, --lang <string>', 'language', 'en')
-    .option('-t, --text <string>', 'phrase to search for')
+    .option('-p, --phrase <string>', 'phrase to search for')
+
 
 program.parse(process.argv)
 
 const options = program.opts()
 const caseSensitive = false
-const text_value = options.text
+const phrase_value = options.phrase
 const lang_value = 'en' // TODO: add support for options.lang
 const directory = './data/' + lang_value
 
-const spinner = ora(chalk.cyan(`searching '${directory}' for '${text_value}'...`)).start()
+const spinner = ora(chalk.cyan(`searching '${directory}' for '${phrase_value}'...`)).start()
 
 try {
     // Check if the directory exists
@@ -67,7 +68,7 @@ try {
                 continue;
             }
 
-            const searchTarget = caseSensitive ? text_value : text_value.toLowerCase();
+            const searchTarget = caseSensitive ? phrase_value : phrase_value.toLowerCase();
             const contentLines = content.split(/\r?\n/);
 
             contentLines.forEach((line, index) => {
@@ -81,7 +82,7 @@ try {
                         lineNumber: index + 1,
                         lineContent: line, // Store original line content
                         matchStartIndex: currentMatchIndexInLowerCase, // Start index of match in the original line (assuming only case changes)
-                        searchText: text_value // The actual text searched for (original case)
+                        searchText: phrase_value // The actual text searched for (original case)
                     };
 
                     // Add to groupedMatches
@@ -104,7 +105,7 @@ try {
     spinner.stop(); // Stop the scanning spinner
 
     if (totalMatchesFound > 0) {
-        console.log(chalk.green.bold(`\n--- Search Results for '${text_value}' in '${directory}' ---`));
+        console.log(chalk.green.bold(`\n--- Search Results for '${phrase_value}' in '${directory}' ---`));
 
         // Get sorted file paths
         const sortedFilePaths = Array.from(groupedMatches.keys()).sort();
@@ -171,7 +172,7 @@ try {
         });
         console.log(chalk.green.bold(`\nSearch complete! Found ${totalMatchesFound} total match(es) in ${filesWithMatches.size} file(s).`));
     } else {
-        console.log(chalk.yellow.bold(`\nSearch complete. No matches found for '${text_value}' in ${filesWithMatches.size} file(s) within '${directory}'.`));
+        console.log(chalk.yellow.bold(`\nSearch complete. No matches found for '${phrase_value}' in ${filesWithMatches.size} file(s) within '${directory}'.`));
     }
 
 } catch (error) {
