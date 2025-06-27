@@ -4,17 +4,16 @@ import { Command } from 'commander'
 import {promises as fs_promises} from 'fs'
 import chalk from 'chalk'
 import ora from 'ora'
-//import pkg from './package.json'
 import path from 'path'
 import {get_filename_from_translation} from './helpers.js'
-
+import package_info from './package.json' with { type: 'json' };
 
 const program = new Command()
 
 program
     .name('bibcli')
     .description("CLI tool for scavaging patterns in different translations of God's Holy Word.")
-    .version('0.0.1')
+    .version(package_info.version)
     .option('-d, --debug', 'output extra debugging')
     .option('-l, --lang <string>', 'language', 'en')
     .option('-p, --phrase <string>', 'phrase to search for')
