@@ -2,6 +2,13 @@
 
 A handy dandy CLI for sifting through different translations of God's Holy Word!
 
+## Translations Supported
+
+- `KJV` (King James Version - of course)
+- `NKJV`(New King James Version)
+- `ESV` (English Standard Version)
+- `AMP` (Amplified Version)
+
 ## Installation
 
 `npm i bibcli`
