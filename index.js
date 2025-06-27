@@ -6,6 +6,7 @@ import chalk from 'chalk'
 import ora from 'ora'
 //import pkg from './package.json'
 import path from 'path'
+import {get_filename_from_translation} from './helpers.js'
 
 
 const program = new Command()
@@ -17,6 +18,7 @@ program
     .option('-d, --debug', 'output extra debugging')
     .option('-l, --lang <string>', 'language', 'en')
     .option('-p, --phrase <string>', 'phrase to search for')
+    .option('-t, --translation <string>', 'translation filter', '')
 
 
 program.parse(process.argv)
@@ -25,15 +27,17 @@ const options = program.opts()
 const caseSensitive = false
 const phrase_value = options.phrase
 const lang_value = 'en' // TODO: add support for options.lang
-const directory = './data/' + lang_value
+const translation_filter = options.translation
+const translation_file_name = get_filename_from_translation(translation_filter)
+const dir_name = './data/' + lang_value
 
-const spinner = ora(chalk.cyan(`searching '${directory}' for '${phrase_value}'...`)).start()
+const spinner = ora(chalk.cyan(`searching '${dir_name}' for '${phrase_value}'...`)).start()
 
 try {
     // Check if the directory exists
-    const stats = await fs_promises.stat(directory);
+    const stats = await fs_promises.stat(dir_name);
     if (!stats.isDirectory()) {
-        spinner.fail(chalk.red(`Error: '${directory}' is not a directory.`));
+        spinner.fail(chalk.red(`Error: '${dir_name}' is not a directory.`));
         process.exit(1);
     }
 
@@ -42,19 +46,21 @@ try {
     // Use a Map to group matches by file path
     const groupedMatches = new Map(); // Map<filePath, Array<MatchDetails>>
 
-    const files = await fs_promises.readdir(directory);
+    const files = await fs_promises.readdir(dir_name);
 
-    spinner.text = chalk.cyan(`Scanning ${files.length} items in '${directory}'...`);
+    spinner.text = chalk.cyan(`Scanning ${files.length} items in '${dir_name}'...`);
 
     for (const file of files) {
-        const filePath = path.join(directory, file);
+        if (translation_file_name !== '' && translation_file_name !== file) continue;
+
+        const filePath = path.join(dir_name, file);
         let fileStats;
         try {
             fileStats = await fs_promises.stat(filePath);
         } catch (err) {
             // Skip if we can't stat the file (e.g., permission error, broken symlink)
             spinner.warn(chalk.yellow(`Skipping '${filePath}': Could not access. (${err.message})`));
-            spinner.start(chalk.cyan(`Scanning items in '${directory}'...`)); // Restart spinner
+            spinner.start(chalk.cyan(`Scanning items in '${dir_name}'...`)); // Restart spinner
             continue;
         }
 
@@ -64,7 +70,7 @@ try {
                 content = await fs_promises.readFile(filePath, 'utf8');
             } catch (err) {
                 spinner.warn(chalk.yellow(`Skipping '${filePath}': Could not read file content. (${err.message})`));
-                spinner.start(chalk.cyan(`Scanning items in '${directory}'...`)); // Restart spinner
+                spinner.start(chalk.cyan(`Scanning items in '${dir_name}'...`)); // Restart spinner
                 continue;
             }
 
@@ -98,14 +104,14 @@ try {
             });
         } else if (fileStats.isDirectory()) {
             spinner.info(chalk.blue(`Skipping directory: '${filePath}' (non-recursive search).`));
-            spinner.start(chalk.cyan(`Scanning items in '${directory}'...`)); // Restart spinner
+            spinner.start(chalk.cyan(`Scanning items in '${dir_name}'...`)); // Restart spinner
         }
     }
 
     spinner.stop(); // Stop the scanning spinner
 
     if (totalMatchesFound > 0) {
-        console.log(chalk.green.bold(`\n--- Search Results for '${phrase_value}' in '${directory}' ---`));
+        console.log(chalk.green.bold(`\n--- Search Results for '${phrase_value}' in '${dir_name}' ---`));
 
         // Get sorted file paths
         const sortedFilePaths = Array.from(groupedMatches.keys()).sort();
@@ -172,12 +178,12 @@ try {
         });
         console.log(chalk.green.bold(`\nSearch complete! Found ${totalMatchesFound} total match(es) in ${filesWithMatches.size} file(s).`));
     } else {
-        console.log(chalk.yellow.bold(`\nSearch complete. No matches found for '${phrase_value}' in ${filesWithMatches.size} file(s) within '${directory}'.`));
+        console.log(chalk.yellow.bold(`\nSearch complete. No matches found for '${phrase_value}' in ${filesWithMatches.size} file(s) within '${dir_name}'.`));
     }
 
 } catch (error) {
     if (error.code === 'ENOENT') {
-        spinner.fail(chalk.red(`Error: Directory not found at '${directory}'.`));
+        spinner.fail(chalk.red(`Error: Directory not found at '${dir_name}'.`));
     } else {
         spinner.fail(chalk.red(`An unexpected error occurred: ${error.message}`));
     }
