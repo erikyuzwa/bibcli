@@ -15,7 +15,7 @@ program
     .description("CLI tool for scavaging patterns in different translations of God's Holy Word.")
     .version('0.0.1')
     .option('-d, --debug', 'output extra debugging')
-    .option('-l, --lang', 'language (default "en")', 'en')
+    .option('-l, --lang <string>', 'language', 'en')
     .option('-t, --text <string>', 'phrase to search for')
 
 program.parse(process.argv)
@@ -23,7 +23,7 @@ program.parse(process.argv)
 const options = program.opts()
 const caseSensitive = false
 const text_value = options.text
-const lang_value = options.lang
+const lang_value = 'en' // TODO: add support for options.lang
 const directory = './data/' + lang_value
 
 const spinner = ora(chalk.cyan(`searching '${directory}' for '${text_value}'...`)).start()
